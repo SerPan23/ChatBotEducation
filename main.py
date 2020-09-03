@@ -49,7 +49,7 @@ def get_answer_for_task(message):
     if message.text == tasks[0][1]:
         bot.send_message(message.from_user.id, text='Правильно', reply_markup=markupClose)
     else:
-        bot.send_message(message.from_user.id, text='Неправильно')
+        bot.send_message(message.from_user.id, text='Неправильно', reply_markup=markupClose)
 
 
 bot.polling(none_stop=True, interval=0)
