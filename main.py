@@ -6,7 +6,7 @@ from telebot import types
 bot = telebot.TeleBot(se.TOKEN)
 
 
-tasks = [['3x^2 - 14x - 5 = 0', '1', '124', '2344'], ['3x^2 - 14x + 5 = 0', '2', '6', '10']]
+tasks = [['3x^2 - 14x - 5 = 0', '5, 1/3', '10, 5/8', '1/9, 0'], ['3x^2 - 14x + 5 = 0', '2', '6', '10']]
 
 class Task:
     def __init__(self, id):
