@@ -1,2 +1,4 @@
 import db
-import settings
+import settings as se
+import telebot
+bot = telebot.TeleBot(se.TOKEN)
