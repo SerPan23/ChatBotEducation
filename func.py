@@ -18,7 +18,6 @@ def chose_topics(message):
 def send_task(message):
     print(db.taskId)
     return bot.send_message(message.chat.id, text=db.tasks[db.taskId][0], reply_markup=kb.get_akb())
-    # bot.register_next_step_handler(msg, get_answer_for_task)
 
 
 def get_answer_for_task(message):
