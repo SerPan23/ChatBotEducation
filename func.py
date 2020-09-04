@@ -24,7 +24,7 @@ def get_answer_for_task(message):
         bot.send_message(message.chat.id, text='Правильно',
                          reply_markup=kb.nextBackKb)
     else:
-        bot.send_message(message.chat.id, text='хуета',
+        bot.send_message(message.chat.id, text='Неправильно',
                          reply_markup=kb.retryKb)
 
 
