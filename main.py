@@ -2,7 +2,7 @@ import db
 import kb
 import settings as se
 import telebot
-from telebot import types
+import func as f
 
 bot = telebot.TeleBot(se.TOKEN)
 
@@ -11,9 +11,7 @@ bot = telebot.TeleBot(se.TOKEN)
 def send_welcome(message):
     bot.send_message(message.from_user.id,
                      "Привет, меня зовут E-Bot, я направлен помочь тебе в изучении школьной программы.")
-    bot.send_message(message.from_user.id,
-                     "Выбери предмет:", reply_markup=kb.directListKb)
-
+    f.chose_direction(message)
 
 @bot.callback_query_handler(func=lambda call: True)
 def callback_worker(call):
