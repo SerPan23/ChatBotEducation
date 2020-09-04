@@ -65,6 +65,15 @@ def nextQuestion(message):
         bot.send_message(message.from_user.id, text=tasks[db.taskId][0],
                          reply_markup=markup)
         bot.register_next_step_handler(message, get_answer_for_task)
+    elif message.text == 'Повторить':
+        markup = types.ReplyKeyboardMarkup(row_width=2)
+        itembtn1 = types.KeyboardButton(tasks[db.taskId][1])
+        itembtn2 = types.KeyboardButton(tasks[db.taskId][2])
+        itembtn3 = types.KeyboardButton(tasks[db.taskId][3])
+        markup.add(itembtn1, itembtn2, itembtn3)
+        bot.send_message(message.from_user.id, text=tasks[db.taskId][0],
+                         reply_markup=markup)
+        bot.register_next_step_handler(message, get_answer_for_task)
 
 
 bot.polling(none_stop=True, interval=0)
