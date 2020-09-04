@@ -20,6 +20,7 @@ def send_task(message):
 
 
 def get_answer_for_task(message):
+
     if message.text == db.tasks[db.taskId][1]:
         bot.send_message(message.chat.id, text='Правильно',
                          reply_markup=kb.nextBackKb)
