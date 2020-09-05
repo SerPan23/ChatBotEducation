@@ -148,3 +148,6 @@ cython_debug/
 .idea/misc.xml
 .idea/ChatBotEducation.iml
 .idea/misc.xml
+.handler-saves/step.save
+__pycache__/func.cpython-38.pyc
+__pycache__/func.cpython-38.pyc
