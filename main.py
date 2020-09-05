@@ -2,7 +2,6 @@ import db
 import kb
 import settings as se
 import telebot
-import func as f
 
 bot = telebot.TeleBot(se.TOKEN)
 
