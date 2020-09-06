@@ -13,7 +13,6 @@ def add_lesson(name, show_name):
         "topics": []
     }
     lessons = mdb.lessons
-    # print(lessons.insert_one(lesson).inserted_id)
     lessons.insert_one(lesson).inserted_id
 
 
@@ -21,7 +20,7 @@ def give_lessons():
     l = []
     for i in mdb.lessons.find():
         l.append(i)
-    return  l
+    return l
 
 
 
