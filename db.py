@@ -25,5 +25,3 @@ def give_lessons():
 
 
 # add_lesson("math2", "Математика2")
-# for i in mdb.lessons.find():
-#     print(i)
