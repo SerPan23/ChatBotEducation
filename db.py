@@ -40,13 +40,6 @@ def del_topic(lesson_name, name):
     lessons.replace_one({"name": lesson_name}, newitem)
 
 
-def give_lessons():
-    l = []
-    for i in lessons.find():
-        l.append(i)
-    return l
-
-
 def add_task(topic, task, answers, rightId):
     task = {
         "topic": topic,
@@ -55,6 +48,20 @@ def add_task(topic, task, answers, rightId):
         "rightId": rightId
     }
     tasks.insert_one(task).inserted_id
+
+
+def give_lessons():
+    l = []
+    for i in lessons.find():
+        l.append(i)
+    return l
+
+
+def give_topics(lesson_name):
+    item = lessons.find_one({"name": lesson_name})
+    topics = item['topics']
+    return topics
+
 
 
 # add_lesson("math", "Математика")

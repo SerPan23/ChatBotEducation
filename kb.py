@@ -5,15 +5,14 @@ import db
 directListKb = types.InlineKeyboardMarkup()
 # key_math = types.InlineKeyboardButton(text='Математика', callback_data='math')
 for item in db.give_lessons():
-    # print(item['name'])
     item['name'] = types.InlineKeyboardButton(text=item['show_name'], callback_data=item['name'])
     directListKb.add(item['name'])
 
 
-topicsListKb = types.InlineKeyboardMarkup(row_width=1)
-key_quadratic_equation = types.InlineKeyboardButton(text='Квадратное уравнение', callback_data='quadratic_equation')
-to_directions = types.InlineKeyboardButton(text='К предметам', callback_data='to_directions')
-topicsListKb.add(key_quadratic_equation, to_directions)
+# topicsListKb = types.InlineKeyboardMarkup(row_width=1)
+# key_quadratic_equation = types.InlineKeyboardButton(text='Квадратное уравнение', callback_data='quadratic_equation')
+# to_directions = types.InlineKeyboardButton(text='К предметам', callback_data='to_directions')
+# topicsListKb.add(key_quadratic_equation, to_directions)
 
 
 nextBackKb = types.ReplyKeyboardMarkup(row_width=2)
@@ -37,3 +36,14 @@ def get_akb():
     answbtn3 = types.KeyboardButton(db.tasks[db.taskId][3])
     answerKb.add(answbtn1, answbtn2, answbtn3)
     return answerKb
+
+
+def get_topics_list(lesson_name):
+    topicsListKb = types.InlineKeyboardMarkup(row_width=1)
+    topics = db.give_topics(lesson_name)
+    for item in db.give_topics(lesson_name):
+        item = types.InlineKeyboardButton(text=topics[item], callback_data=item)
+        topicsListKb.add(item)
+    to_directions = types.InlineKeyboardButton(text='К предметам', callback_data='to_directions')
+    topicsListKb.add(to_directions)
+    return topicsListKb

@@ -16,7 +16,7 @@ def send_welcome(message):
 @bot.callback_query_handler(func=lambda call: True)
 def callback_worker(call):
     if call.data == "math":
-        chose_topics(call.message)
+        chose_topics(call.message, call.data)
     elif call.data == "quadratic_equation":
         # f.send_task(call.message)
         m = send_task(call.message)
@@ -44,8 +44,8 @@ def chose_direction(message):
                      "Выбери предмет:", reply_markup=kb.directListKb)
 
 
-def chose_topics(message):
-    bot.send_message(message.chat.id, 'Выбери задание:', reply_markup=kb.topicsListKb)
+def chose_topics(message, lesson):
+    bot.send_message(message.chat.id, 'Выбери задание:', reply_markup=kb.get_topics_list(lesson))
 
 
 def send_task(message):
