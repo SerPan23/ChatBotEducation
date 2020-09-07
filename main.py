@@ -2,6 +2,7 @@ import db
 import kb
 import settings as se
 import telebot
+from random import randint
 
 bot = telebot.TeleBot(se.TOKEN)
 
@@ -16,27 +17,33 @@ def send_welcome(message):
 @bot.callback_query_handler(func=lambda call: True)
 def callback_worker(call):
     if call.data == "math":
-        chose_topics(call.message, call.data)
-    elif call.data == "quadratic_equation":
-        # f.send_task(call.message)
-        m = send_task(call.message)
-        bot.register_next_step_handler(m, get_answer_for_task)
+        db.direct = call.data
+        chose_topics(call.message, db.direct)
     elif call.data == "to_directions":
         chose_direction(call.message)
+    elif call.data[0:9] == "topicCall":
+        db.topic = call.data[10:]
+        m = send_task(call.message, db.topic)
+        if m != -1:
+            # print(m[1])
+            db.task_id = m[1]
+            bot.register_next_step_handler(m[0], get_answer_for_task)
+    # print(call.data[0:9])
 
 
 @bot.message_handler(func=lambda message: True)
 def nextQuestion(message):
     if message.text == 'Следующее задание':
         # f.next_task(message)
-        next_task()
-        m = send_task(message)
-        bot.register_next_step_handler(m, get_answer_for_task)
+        m = send_task(message, db.topic)
+        db.task_id = m[1]
+        bot.register_next_step_handler(m[0], get_answer_for_task)
     elif message.text == 'Повторить':
-        m = send_task(message)
-        bot.register_next_step_handler(m, get_answer_for_task)
+        m = send_task(message, db.topic, db.task_id)
+        db.task_id = m[1]
+        bot.register_next_step_handler(m[0], get_answer_for_task)
     elif message.text == 'К темам':
-        chose_topics(message)
+        chose_topics(message, db.direct)
 
 
 def chose_direction(message):
@@ -48,12 +55,26 @@ def chose_topics(message, lesson):
     bot.send_message(message.chat.id, 'Выбери задание:', reply_markup=kb.get_topics_list(lesson))
 
 
-def send_task(message):
-    return bot.send_message(message.chat.id, text=db.tasks[db.taskId][0], reply_markup=kb.get_akb())
+def send_task(message, topic, tid=''):
+    if(tid != ''):
+        t = db.give_tasks_by_id(db.task_id)
+        return [bot.send_message(message.chat.id, text=t['task'], reply_markup=kb.get_akb(t['answers'])), t['_id']]
+    else:
+        tasks = db.give_tasks(topic)
+        if len(tasks) == 0:
+            bot.send_message(message.chat.id, text='Заданий нет', reply_markup=kb.markupClose)
+            return -1
+        else:
+            n = get_task_number(tasks)
+            print(n)
+            t = tasks[int(n)]
+            # print(t)
+            return [bot.send_message(message.chat.id, text=t['task'], reply_markup=kb.get_akb(t['answers'])), t['_id']]
 
 
 def get_answer_for_task(message):
-    if message.text == db.tasks[db.taskId][1]:
+    t = db.give_tasks_by_id(db.task_id)
+    if message.text == t['answers'][t['rightId']]:
         bot.send_message(message.chat.id, text='Правильно',
                          reply_markup=kb.nextBackKb)
     else:
@@ -61,11 +82,9 @@ def get_answer_for_task(message):
                          reply_markup=kb.retryKb)
 
 
-def next_task():
-    if db.taskId == 0:
-        db.taskId += 1
-    else:
-        db.taskId = 0
+def get_task_number(tasks):
+    n = randint(0, len(tasks)-1)
+    return n
 
 
 bot.enable_save_next_step_handlers(delay=2)

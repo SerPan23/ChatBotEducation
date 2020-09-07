@@ -1,7 +1,8 @@
 import pymongo
 import settings as se
-taskId = 0
-tasks = [['3x^2 - 14x - 5 = 0', '5, 1/3', '10, 5/8', '1/9, 0'], ['x^2 - x + 5 = 0', '2', '6', '10']]
+task_id = 0
+topic = ''
+direct = ''
 
 mdb = pymongo.MongoClient(se.MONGODB_LINK)[se.MONGO_DB]
 lessons = mdb.lessons
@@ -63,8 +64,19 @@ def give_topics(lesson_name):
     return topics
 
 
+def give_tasks(topic):
+    t = []
+    for i in tasks.find({"topic": topic}):
+        t.append(i)
+    return t
+
+def give_tasks_by_id(id):
+    t = tasks.find_one({"_id": id})
+    return t
+
+
 
 # add_lesson("math", "Математика")
-# add_task("quadratic_equation", "Тестовое задание", ['1', '2', '3', '4'], 1)
-# add_topic('math', "test_topic", "Тестовый топик")
+# add_task("quadratic_equation", "Тестовое задание2", ['1324', 'sdf', '12', '6'], 3)
+# add_topic('math', "quadratic_equation", "Тестовый топик")
 # del_topic('math', "test_topic2")
