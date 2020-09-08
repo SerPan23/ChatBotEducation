@@ -7,6 +7,7 @@ direct = ''
 mdb = pymongo.MongoClient(se.MONGODB_LINK)[se.MONGO_DB]
 lessons = mdb.lessons
 tasks = mdb.tasks
+users = mdb.users
 
 def add_lesson(name, show_name):
     lesson = {
@@ -70,10 +71,31 @@ def give_tasks(topic):
         t.append(i)
     return t
 
+
 def give_tasks_by_id(id):
     t = tasks.find_one({"_id": id})
     return t
 
+
+def add_user_taskid(userid, taskid):
+    u = users.find_one({"id": userid})
+    if u == None:
+        user = {
+            "id": userid,
+            "taskid": taskid,
+        }
+        users.insert_one(user).inserted_id
+    else:
+        user = {
+            "id": u['id'],
+            "taskid": taskid,
+        }
+        users.replace_one({"id": userid}, user)
+
+
+def give_user_taskid(userid):
+    u = users.find_one({"id": userid})
+    return u['taskid']
 
 
 # add_lesson("math", "Математика")

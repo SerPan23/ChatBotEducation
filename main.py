@@ -26,7 +26,7 @@ def callback_worker(call):
         m = send_task(call.message, db.topic)
         if m != -1:
             # print(m[1])
-            db.task_id = m[1]
+            db.add_user_taskid(call.message.chat.id, m[1])
             bot.register_next_step_handler(m[0], get_answer_for_task)
     # print(call.data[0:9])
 
@@ -34,13 +34,12 @@ def callback_worker(call):
 @bot.message_handler(func=lambda message: True)
 def nextQuestion(message):
     if message.text == 'Следующее задание':
-        # f.next_task(message)
         m = send_task(message, db.topic)
-        db.task_id = m[1]
+        db.add_user_taskid(message.chat.id, m[1])
         bot.register_next_step_handler(m[0], get_answer_for_task)
     elif message.text == 'Повторить':
-        m = send_task(message, db.topic, db.task_id)
-        db.task_id = m[1]
+        m = send_task(message, db.topic, db.give_user_taskid(message.chat.id))
+        db.add_user_taskid(message.chat.id, m[1])
         bot.register_next_step_handler(m[0], get_answer_for_task)
     elif message.text == 'К темам':
         chose_topics(message, db.direct)
@@ -57,7 +56,7 @@ def chose_topics(message, lesson):
 
 def send_task(message, topic, tid=''):
     if(tid != ''):
-        t = db.give_tasks_by_id(db.task_id)
+        t = db.give_tasks_by_id(db.give_user_taskid(message.chat.id))
         return [bot.send_message(message.chat.id, text=t['task'], reply_markup=kb.get_akb(t['answers'])), t['_id']]
     else:
         tasks = db.give_tasks(topic)
@@ -68,12 +67,11 @@ def send_task(message, topic, tid=''):
             n = get_task_number(tasks)
             print(n)
             t = tasks[int(n)]
-            # print(t)
             return [bot.send_message(message.chat.id, text=t['task'], reply_markup=kb.get_akb(t['answers'])), t['_id']]
 
 
 def get_answer_for_task(message):
-    t = db.give_tasks_by_id(db.task_id)
+    t = db.give_tasks_by_id(db.give_user_taskid(message.chat.id))
     if message.text == t['answers'][t['rightId']]:
         bot.send_message(message.chat.id, text='Правильно',
                          reply_markup=kb.nextBackKb)
