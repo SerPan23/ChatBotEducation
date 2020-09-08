@@ -78,8 +78,6 @@ def give_tasks_by_id(id):
 
 
 def add_user_taskid(userid, taskid):
-    userid = str(userid)
-    taskid = str(taskid)
     u = users.find_one({"id": userid})
     if u == None:
         user = {

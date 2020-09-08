@@ -35,7 +35,7 @@ def callback_worker(call):
 def nextQuestion(message):
     if message.text == 'Следующее задание':
         m = send_task(message, db.topic)
-        db.add_user_taskid(message.chat.id, m[1])
+        db.add_user_taskid(str(message.chat.id), str(m[1]))
         bot.register_next_step_handler(m[0], get_answer_for_task)
     elif message.text == 'Повторить':
         m = send_task(message, db.topic, db.give_user_taskid(message.chat.id))
