@@ -101,8 +101,8 @@ def give_user_taskid(userid):
 
 
 def send_photo_decision(taskid):
-    # bot.send_photo(message.chat.id, db.testPhoto)
-    pass
+    t = tasks.find_one({"_id": id})
+    return  t['decision_url']
 
 
 

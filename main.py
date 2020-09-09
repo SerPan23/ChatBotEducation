@@ -44,7 +44,8 @@ def nextQuestion(message):
     elif message.text == 'К темам':
         chose_topics(message, db.direct)
     elif message.text == 'Показать решение':
-        bot.send_photo(message.chat.id, db.testPhoto)
+        ph = db.send_photo_decision(db.give_user_taskid(message.chat.id))
+        bot.send_photo(message.chat.id, ph)
 
 
 def chose_direction(message):
