@@ -22,7 +22,7 @@ def callback_worker(call):
     elif call.data == "to_directions":
         chose_direction(call.message)
     elif call.data[0:9] == "topicCall":
-        db.add_user_direct(call.message.chat.id, call.data[10:])
+        db.add_user_topic(call.message.chat.id, call.data[10:])
         m = send_task(call.message, call.data[10:])
         if m != -1:
             # print(m[1])
