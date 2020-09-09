@@ -25,7 +25,7 @@ itembtn12 = types.KeyboardButton('Следующее задание')
 itembtn22 = types.KeyboardButton('Повторить')
 itembtn32 = types.KeyboardButton('Показать решение')
 itembtn42 = types.KeyboardButton("К темам")
-retryKb.add(itembtn12, itembtn22, itembtn32)
+retryKb.add(itembtn12, itembtn22, itembtn32, itembtn42)
 
 markupClose = types.ReplyKeyboardRemove(selective=False)
 
