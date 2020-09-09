@@ -11,6 +11,11 @@ bot = telebot.TeleBot(se.TOKEN)
 def send_welcome(message):
     bot.send_message(message.chat.id,
                      "Привет, меня зовут E-Bot, я направлен помочь тебе в изучении школьной программы.", reply_markup=kb.markupClose)
+
+    photo = open(db.testPhoto, 'rb')
+    bot.send_photo(message.chat.id, photo)
+    bot.send_photo(message.chat.id, "FILEID")
+
     chose_direction(message)
 
 

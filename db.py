@@ -3,6 +3,7 @@ import settings as se
 task_id = 0
 topic = ''
 direct = ''
+testPhoto = 'https://vk.com/photo560559622_457240231'
 
 mdb = pymongo.MongoClient(se.MONGODB_LINK)[se.MONGO_DB]
 lessons = mdb.lessons
@@ -42,12 +43,13 @@ def del_topic(lesson_name, name):
     lessons.replace_one({"name": lesson_name}, newitem)
 
 
-def add_task(topic, task, answers, rightId):
+def add_task(topic, task, answers, rightId, decision):
     task = {
         "topic": topic,
         "task": task,
         "answers": answers,
-        "rightId": rightId
+        "rightId": rightId,
+        "decision": decision
     }
     tasks.insert_one(task).inserted_id
 
