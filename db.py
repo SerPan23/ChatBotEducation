@@ -107,6 +107,7 @@ def send_photo_decision(taskid):
 
 
 # add_lesson("math", "Математика")
-# add_task("quadratic_equation", "Тестовое задание2", ['1324', 'sdf', '12', '6'], 3)
+add_task("quadratic_equation", "Тестовое задание2", ['1324', 'sdf', '12',
+                                                     '6'], 3, 'https://yadi.sk/i/QmKRd6sPcLuQ2w')
 # add_topic('math', "quadratic_equation", "Тестовый топик")
 # del_topic('math', "test_topic2")
