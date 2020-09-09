@@ -22,8 +22,8 @@ def callback_worker(call):
     elif call.data == "to_directions":
         chose_direction(call.message)
     elif call.data[0:9] == "topicCall":
-        db.topic = call.data[10:]
-        m = send_task(call.message, db.topic)
+        db.add_user_direct(call.message.chat.id, call.data[10:])
+        m = send_task(call.message, call.data[10:])
         if m != -1:
             # print(m[1])
             db.add_user_taskid(call.message.chat.id, m[1])
@@ -34,11 +34,11 @@ def callback_worker(call):
 @bot.message_handler(func=lambda message: True)
 def nextQuestion(message):
     if message.text == 'Следующее задание':
-        m = send_task(message, db.topic)
+        m = send_task(message, db.give_user_topic(message.chat.id))
         db.add_user_taskid(message.chat.id, m[1])
         bot.register_next_step_handler(m[0], get_answer_for_task)
     elif message.text == 'Повторить':
-        m = send_task(message, db.topic, db.give_user_taskid(message.chat.id))
+        m = send_task(message, db.give_user_topic(message.chat.id), db.give_user_taskid(message.chat.id))
         db.add_user_taskid(message.chat.id, m[1])
         bot.register_next_step_handler(m[0], get_answer_for_task)
     elif message.text == 'К темам':

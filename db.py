@@ -1,9 +1,5 @@
 import pymongo
 import settings as se
-task_id = 0
-topic = ''
-direct = ''
-testPhoto = 'https://yadi.sk/i/QmKRd6sPcLuQ2w'
 
 mdb = pymongo.MongoClient(se.MONGODB_LINK)[se.MONGO_DB]
 lessons = mdb.lessons
@@ -86,6 +82,7 @@ def add_user_taskid(userid, taskid):
             "id": userid,
             "taskid": taskid,
             "direct": '',
+            "topic": ''
         }
         users.insert_one(user).inserted_id
     else:
@@ -93,6 +90,7 @@ def add_user_taskid(userid, taskid):
             "id": u['id'],
             "taskid": taskid,
             "direct": u['direct'],
+            "topic": u['topic']
         }
         users.replace_one({"id": userid}, user)
 
@@ -104,6 +102,7 @@ def add_user_direct(userid, direct):
             "id": userid,
             "taskid": '',
             "direct": direct,
+            "topic": ''
         }
         users.insert_one(user).inserted_id
     else:
@@ -111,6 +110,27 @@ def add_user_direct(userid, direct):
             "id": u['id'],
             "taskid": u['taskid'],
             "direct": direct,
+            "topic": u['topic']
+        }
+        users.replace_one({"id": userid}, user)
+
+
+def add_user_topic(userid, topic):
+    u = users.find_one({"id": userid})
+    if u == None:
+        user = {
+            "id": userid,
+            "taskid": '',
+            "direct": '',
+            "topic": topic
+        }
+        users.insert_one(user).inserted_id
+    else:
+        user = {
+            "id": u['id'],
+            "taskid": u['taskid'],
+            "direct": u['direct'],
+            "topic": topic
         }
         users.replace_one({"id": userid}, user)
 
@@ -123,6 +143,12 @@ def give_user_taskid(userid):
 def give_user_direct(userid):
     u = users.find_one({"id": userid})
     return u['direct']
+
+
+def give_user_topic(userid):
+    u = users.find_one({"id": userid})
+    return u['topic']
+
 
 
 def send_photo_decision(taskid):
