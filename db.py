@@ -3,7 +3,7 @@ import settings as se
 task_id = 0
 topic = ''
 direct = ''
-testPhoto = 'https://vk.com/photo560559622_457240231'
+testPhoto = 'https://yadi.sk/i/QmKRd6sPcLuQ2w'
 
 mdb = pymongo.MongoClient(se.MONGODB_LINK)[se.MONGO_DB]
 lessons = mdb.lessons
