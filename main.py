@@ -11,10 +11,6 @@ bot = telebot.TeleBot(se.TOKEN)
 def send_welcome(message):
     bot.send_message(message.chat.id,
                      "Привет, меня зовут E-Bot, я направлен помочь тебе в изучении школьной программы.", reply_markup=kb.markupClose)
-
-    bot.send_photo(message.chat.id, db.testPhoto)
-    bot.send_photo(message.chat.id, "FILEID")
-
     chose_direction(message)
 
 
@@ -47,6 +43,8 @@ def nextQuestion(message):
         bot.register_next_step_handler(m[0], get_answer_for_task)
     elif message.text == 'К темам':
         chose_topics(message, db.direct)
+    elif message.text == 'Показать решение':
+        bot.send_photo(message.chat.id, db.testPhoto)
 
 
 def chose_direction(message):

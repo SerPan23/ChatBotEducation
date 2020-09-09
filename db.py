@@ -43,13 +43,13 @@ def del_topic(lesson_name, name):
     lessons.replace_one({"name": lesson_name}, newitem)
 
 
-def add_task(topic, task, answers, rightId, decision):
+def add_task(topic, task, answers, rightId, decision_url):
     task = {
         "topic": topic,
         "task": task,
         "answers": answers,
         "rightId": rightId,
-        "decision": decision
+        "decision_url": decision_url
     }
     tasks.insert_one(task).inserted_id
 
@@ -98,6 +98,12 @@ def add_user_taskid(userid, taskid):
 def give_user_taskid(userid):
     u = users.find_one({"id": userid})
     return u['taskid']
+
+
+def send_photo_decision(taskid):
+    # bot.send_photo(message.chat.id, db.testPhoto)
+    pass
+
 
 
 # add_lesson("math", "Математика")

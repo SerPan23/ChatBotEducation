@@ -20,10 +20,11 @@ itembtn1 = types.KeyboardButton('Следующее задание')
 itembtn2 = types.KeyboardButton("К темам")
 nextBackKb.add(itembtn1, itembtn2)
 
-retryKb = types.ReplyKeyboardMarkup(row_width=3)
+retryKb = types.ReplyKeyboardMarkup(row_width=2)
 itembtn12 = types.KeyboardButton('Следующее задание')
 itembtn22 = types.KeyboardButton('Повторить')
-itembtn32 = types.KeyboardButton("К темам")
+itembtn32 = types.KeyboardButton('Показать решение')
+itembtn42 = types.KeyboardButton("К темам")
 retryKb.add(itembtn12, itembtn22, itembtn32)
 
 markupClose = types.ReplyKeyboardRemove(selective=False)
