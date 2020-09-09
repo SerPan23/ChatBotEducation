@@ -17,8 +17,8 @@ def send_welcome(message):
 @bot.callback_query_handler(func=lambda call: True)
 def callback_worker(call):
     if call.data == "math":
-        db.direct = call.data
-        chose_topics(call.message, db.direct)
+        db.add_user_direct(call.message.chat.id, call.data)
+        chose_topics(call.message, call.data)
     elif call.data == "to_directions":
         chose_direction(call.message)
     elif call.data[0:9] == "topicCall":
@@ -42,7 +42,8 @@ def nextQuestion(message):
         db.add_user_taskid(message.chat.id, m[1])
         bot.register_next_step_handler(m[0], get_answer_for_task)
     elif message.text == 'К темам':
-        chose_topics(message, db.direct)
+        d = db.give_user_direct(message.chat.id)
+        chose_topics(message, d)
     elif message.text == 'Показать решение':
         ph = db.send_photo_decision(db.give_user_taskid(message.chat.id))
         bot.send_photo(message.chat.id, ph)

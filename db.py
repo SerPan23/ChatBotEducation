@@ -85,12 +85,32 @@ def add_user_taskid(userid, taskid):
         user = {
             "id": userid,
             "taskid": taskid,
+            "direct": '',
         }
         users.insert_one(user).inserted_id
     else:
         user = {
             "id": u['id'],
             "taskid": taskid,
+            "direct": u['direct'],
+        }
+        users.replace_one({"id": userid}, user)
+
+
+def add_user_direct(userid, direct):
+    u = users.find_one({"id": userid})
+    if u == None:
+        user = {
+            "id": userid,
+            "taskid": '',
+            "direct": direct,
+        }
+        users.insert_one(user).inserted_id
+    else:
+        user = {
+            "id": u['id'],
+            "taskid": u['taskid'],
+            "direct": direct,
         }
         users.replace_one({"id": userid}, user)
 
@@ -98,6 +118,11 @@ def add_user_taskid(userid, taskid):
 def give_user_taskid(userid):
     u = users.find_one({"id": userid})
     return u['taskid']
+
+
+def give_user_direct(userid):
+    u = users.find_one({"id": userid})
+    return u['direct']
 
 
 def send_photo_decision(taskid):
