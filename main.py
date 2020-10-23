@@ -26,7 +26,6 @@ def callback_worker(call):
         db.add_user_topic(call.message.chat.id, call.data[10:])
         m = send_task(call.message, call.data[10:])
         if m != -1:
-            # print(m[1])
             db.add_user_taskid(call.message.chat.id, m[1])
             bot.register_next_step_handler(m[0], get_answer_for_task)
     # print(call.data[0:9])
