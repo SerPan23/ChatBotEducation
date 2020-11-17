@@ -150,10 +150,9 @@ def give_user_topic(userid):
     return u['topic']
 
 
-
 def send_photo_decision(taskid):
-    t = tasks.find_one({"_id": id})
-    return  t['decision_url']
+    t = tasks.find_one({"_id": taskid})
+    return t['decision_url']
 
 
 
