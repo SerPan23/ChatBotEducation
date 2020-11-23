@@ -5,8 +5,10 @@ import db
 directListKb = types.InlineKeyboardMarkup()
 # key_math = types.InlineKeyboardButton(text='Математика', callback_data='math')
 for item in db.give_lessons():
-    item['name'] = types.InlineKeyboardButton(text=item['show_name'], callback_data=item['name'])
-    directListKb.add(item['name'])
+    # item['name'] = types.InlineKeyboardButton(text=item['show_name'], callback_data=item['name'])
+    # directListKb.add(item['name'])
+    item = types.InlineKeyboardButton(text=item['show_name'], callback_data=item['name'])
+    directListKb.add(item)
 
 
 # topicsListKb = types.InlineKeyboardMarkup(row_width=1)
