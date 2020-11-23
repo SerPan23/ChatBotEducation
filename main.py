@@ -20,6 +20,10 @@ def callback_worker(call):
         db.add_user_direct(call.message.chat.id, call.data)
         # print(call.data)
         chose_topics(call.message, call.data)
+    elif call.data == "computer_science":
+        db.add_user_direct(call.message.chat.id, call.data)
+        # print(call.data)
+        chose_topics(call.message, call.data)
     elif call.data == "to_directions":
         chose_direction(call.message)
     elif call.data[0:9] == "topicCall":
